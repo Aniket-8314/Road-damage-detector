@@ -4,7 +4,13 @@ import cv2
 import tempfile
 import os
  
-MODEL_PATH = 'models/best.pt'
+from huggingface_hub import hf_hub_download
+
+MODEL_PATH = hf_hub_download(
+    repo_id="aniket8314/road-damage",
+    filename="best.pt"
+)
+# MODEL_PATH = 'models/best.pt'
  
 def show():
     st.title('Video Road Damage Detection')

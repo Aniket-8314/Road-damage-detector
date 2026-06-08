@@ -5,7 +5,14 @@ from PIL import Image
 import io
 from pathlib import Path
  
-MODEL_PATH = 'models/best.pt'
+# MODEL_PATH = 'models/best.pt'
+
+from huggingface_hub import hf_hub_download
+
+MODEL_PATH = hf_hub_download(
+    repo_id="aniket8314/road-damage",
+    filename="best.pt"
+)
  
 _model = None
  
