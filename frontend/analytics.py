@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
  
-API_URL = 'http://localhost:8000'
+API_URL = 'https://road-damage-detector-api.onrender.com'
 
  
 def show():

@@ -4,7 +4,7 @@ from streamlit_folium import st_folium
 import requests
 import pandas as pd
  
-API_URL = 'http://localhost:8000'
+API_URL = 'https://road-damage-detector-api.onrender.com'
  
 SEVERITY_COLOR = {
     'Severe':   'red',

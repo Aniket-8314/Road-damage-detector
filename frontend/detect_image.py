@@ -4,7 +4,7 @@ import base64
 from PIL import Image
 import io
  
-API_URL = 'http://localhost:8000'
+API_URL = 'https://road-damage-detector-api.onrender.com'
  
 def show():
     st.title('Road Damage Detection')
@@ -26,11 +26,16 @@ def show():
  
     if uploaded and st.button('🔍 Detect Damage', type='primary'):
         with st.spinner('Running AI detection...'):
-            response = requests.post(
-                f'{API_URL}/detect',
-                files={'file': (uploaded.name, uploaded.getvalue(), 'image/jpeg')},
-                data={'latitude': lat, 'longitude': lon, 'conf': conf}
-            )
+            try:
+                response = requests.post(
+                    f'{API_URL}/detect',
+                    files={'file': (uploaded.name, uploaded.getvalue(), 'image/jpeg')},
+                    data={'latitude': lat, 'longitude': lon, 'conf': conf},
+                    timeout=120
+                )
+            except Exception as e:
+                st.error(f"Backend connection error: {e}")
+                return
  
         if response.status_code == 200:
             data = response.json()
