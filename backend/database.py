@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
  
 DATABASE_URL = os.getenv(
-    'DATABASE_URL'
-    # 'postgresql://postgres:password@localhost:5432/road_damage'
+    'DATABASE_URL',
+    'postgresql://postgres:password@localhost:5432/road_damage'
 )
  
 engine = create_engine(DATABASE_URL)
