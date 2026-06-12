@@ -11,7 +11,8 @@ SEVERITY_COLOR = {
     'Moderate': 'orange',
     'Minor':    'green'
 }
- 
+
+@st.cache_data(ttl=30)
 def show():
     st.title('Road Damage Map')
  

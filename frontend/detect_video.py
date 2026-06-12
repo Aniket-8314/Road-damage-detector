@@ -6,10 +6,14 @@ import os
  
 from huggingface_hub import hf_hub_download
 
-MODEL_PATH = hf_hub_download(
-    repo_id="aniket8314/road-damage",
-    filename="best.pt"
-)
+@st.cache_resource
+def load_model():
+    model_path = hf_hub_download(
+        repo_id="aniket8314/road-damage",
+        filename="best.pt"
+    )
+
+    return YOLO(model_path)
 # MODEL_PATH = 'models/best.pt'
  
 def show():
@@ -18,7 +22,7 @@ def show():
     uploaded_video = st.file_uploader('Upload video', type=['mp4', 'avi', 'mov'])
  
     if uploaded_video and st.button('Process Video', type='primary'):
-        model = YOLO(MODEL_PATH)
+        model = load_model()
  
         with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as tmp:
             tmp.write(uploaded_video.read())
@@ -41,11 +45,18 @@ def show():
             if not ret:
                 break
  
-            if frame_num % 3 == 0:
-                results = model(frame, conf=0.25, verbose=False)
+            if frame_num % 5 == 0:
+                h, w = frame.shape[:2]
+
+                if max(h, w) > 1280:
+                    scale = 1280 / max(h, w)
+                    frame = cv2.resize(frame,(int(w * scale), int(h * scale)))
+                    
+                results = model(frame, conf=0.25,imgsz=640, verbose=False)
                 annotated = results[0].plot()
                 frame_rgb = cv2.cvtColor(annotated, cv2.COLOR_BGR2RGB)
-                frame_display.image(frame_rgb, use_column_width=True)
+                if frame_num%30 ==0:
+                    frame_display.image(frame_rgb, use_column_width=True)
  
                 for box in results[0].boxes:
                     total_detections.append({

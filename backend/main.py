@@ -6,7 +6,7 @@ from typing import Optional
 import base64
 import os
  
-from .detector import run_detection
+from .detector import run_detection,get_model
 from .database import get_db, Detection, create_tables
  
  
@@ -26,6 +26,7 @@ app.add_middleware(
 @app.on_event('startup')
 def startup():
     create_tables()
+    get_model()
  
  
 @app.get('/')
