@@ -6,7 +6,6 @@ import plotly.graph_objects as go
  
 API_URL = 'https://road-damage-detector-api.onrender.com'
 
-@st.cache_data(ttl=30)
 def show():
     st.title('Road Damage Analytics')
  
