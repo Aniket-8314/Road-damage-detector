@@ -2,7 +2,7 @@ from ultralytics import YOLO
 import cv2
 import os
  
-model = YOLO('runs/detect/runs/detect/road_damage_v1/weights/best.pt')
+model = YOLO('runs/detect/runs/detect/road_damage_v1-2/weights/best.pt')
  
 def detect_image(image_path, save_path=None):
     results = model(image_path, conf=0.25)

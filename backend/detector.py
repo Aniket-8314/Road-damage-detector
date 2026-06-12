@@ -4,21 +4,19 @@ import numpy as np
 from PIL import Image
 import io
 from pathlib import Path
+from huggingface_hub import hf_hub_download
  
 # MODEL_PATH = 'models/best.pt'
 
-from huggingface_hub import hf_hub_download
-
-MODEL_PATH = hf_hub_download(
-    repo_id="aniket8314/road-damage",
-    filename="best.pt"
-)
- 
 _model = None
  
 def get_model():
     global _model
     if _model is None:
+        MODEL_PATH = hf_hub_download(
+            repo_id="aniket8314/road-damage",
+            filename="best.pt"
+        )
         _model = YOLO(MODEL_PATH)
     return _model
  
@@ -44,9 +42,15 @@ def run_detection(image_bytes: bytes, conf: float = 0.25):
         raise ValueError('Could not decode image')
  
     img_h, img_w = img.shape[:2]
+    if max(img_h, img_w) > 1280:
+        scale = 1280 / max(img_h, img_w)
+        img = cv2.resize(
+            img,
+            (int(img_w * scale), int(img_h * scale))
+        )
     img_area = img_h * img_w
  
-    results = model(img, conf=conf, verbose=False)
+    results = model(img, conf=conf,imgsz=640, verbose=False)
     result = results[0]
  
     detections = []

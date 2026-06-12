@@ -3,11 +3,11 @@ import yaml
 import json
 from datetime import datetime
  
-model = YOLO('yolov8s.pt')
+model = YOLO('yolov8n.pt')
  
 results = model.train(
     data='dataset/data.yaml',
-    epochs=50,
+    epochs=100,
     imgsz=640,
     batch=16,
     lr0=0.01,           
@@ -36,7 +36,7 @@ results = model.train(
 metrics = {
     'run_name': 'road_damage_v1',
     'timestamp': datetime.now().isoformat(),
-    'epochs': 50,
+    'epochs': 100,
     'imgsz': 640,
     'batch': 16,
     'mAP50': float(results.results_dict.get('metrics/mAP50(B)', 0)),

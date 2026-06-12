@@ -1,5 +1,22 @@
 venv/
 __pycache__/
 *.pt
+
 dataset/
 .env
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Training outputs
+runs/
+weights/
+
+# Environment variables
+.env
+
+# OS
+.DS_Store
+Thumbs.db

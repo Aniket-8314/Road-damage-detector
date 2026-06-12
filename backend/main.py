@@ -25,8 +25,7 @@ app.add_middleware(
  
 @app.on_event('startup')
 def startup():
-    # create_tables()
-    pass
+    create_tables()
  
  
 @app.get('/')
